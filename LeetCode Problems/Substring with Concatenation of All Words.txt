@@ -1,0 +1,107 @@
+Substring with Concatenation of All Words - Hard Problem                 Enumeration, Failed Hashing
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+You are given a string, s, and a list of words, words, that are all of the same length. Find all
+starting indices of substring(s) in s that is a concatenation of each word in words exactly once and without any intervening characters.
+
+Example 1:
+
+Input:
+  s = "barfoothefoobarman",
+  words = ["foo","bar"]
+Output: [0,9]
+Explanation: Substrings starting at index 0 and 9 are "barfoor" and "foobar" respectively.
+The output order does not matter, returning [9,0] is fine too.
+
+Example 2:
+
+Input:
+  s = "wordgoodgoodgoodbestword",
+  words = ["word","good","best","word"]
+Output: []
+
+
+
+------------------------------------------------------------------------------------------
+
+Solution
+--------
+
+import java.util.*;
+
+public class SubstringConcatenation {
+
+  public static void main(String[] args) {
+   new SubstringConcatenation();
+  }
+
+  public SubstringConcatenation() {
+    String s = "barfoothefoobarman";
+    String[] words = new String[]{"foo","bar"};
+    prn(findSubstring(s, words));
+
+    s = "wordgoodgoodgoodbestword";
+    words = new String[]{"word", "good", "best", "word"};
+    prn(findSubstring(s, words));
+  }
+
+  public void prn(List<Integer> arr) {
+
+    for(Integer i : arr) {
+     System.out.println(i + " ");
+    }
+    System.out.println();
+  }
+
+  public List<Integer> findSubstring(String s, String[] words) {
+
+    List<Integer> results = new ArrayList<>();
+
+    //Enumerate all possible concatenations of words
+    List<String>  concats = new ArrayList<>();
+    for(int i = 0; i < words.length; i++) {
+      String concat = words[i];
+      for(int j = 0; j < words.length; j++) {
+       //Cant concatenate the same word
+        if(i == j)
+          continue;
+
+        concat = concat + words[j];
+        if(concat.length() == words[0].length() * words.length)
+          concats.add(concat);
+      }
+    }
+
+    //Weird. That worked.
+
+    //Now iteratively remove the concat from s and record indeces
+    for(String concat : concats) {
+      if(s.contains(concat)) {
+        System.out.println(concat);
+        int index = s.indexOf(concat);
+        results.add(index);
+        s = s.replace(concat, "");
+      }
+    }
+
+    return results;
+  }
+
+}
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Notes
+-----
+
+This one went pretty well even though this solution is not quite correct. Understood
+and mocked out the solution very quickly without looking. There is no way around the
+O(n^2) nature of this problem even with HASHING. Looks like I could have used a
+trie here too according to the solutions. All I cared about was the fact that
+I got the enumeration algorithm correct the first time. The removal wasnt the
+right idea.

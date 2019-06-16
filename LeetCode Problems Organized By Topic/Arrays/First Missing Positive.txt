@@ -1,0 +1,94 @@
+First Missing Positive - Hard Problem                                           Arrays
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Given an unsorted integer array, find the smallest missing positive integer.
+
+Example 1:
+
+Input: [1,2,0]
+Output: 3
+
+Example 2:
+
+Input: [3,4,-1,1]
+Output: 2
+
+Example 3:
+
+Input: [7,8,9,11,12]
+Output: 1
+
+Note:
+
+Your algorithm should run in O(n) time and uses constant extra space.
+
+
+------------------------------------------------------------------------------------------
+
+Solution
+--------
+
+
+//Okay so this is a bit of a tricky problem. My first instinct is to
+//Just sort the array and then step through to find the first number
+//to meet the criteria. However, the problem states that we must step
+//through in O(n) time and sorting it would take O(n log n) time.
+//We can use the special property of a set to act as if it is sorted
+//though.
+
+import java.util.*;
+
+public class FirstMissingPositive {
+
+  public static void main(String[] args){
+    new FirstMissingPositive();
+  }
+
+  public FirstMissingPositive() {
+
+    int[] arr = new int[] {1,2,0};
+    System.out.println(firstMissingPositive(arr));
+    arr = new int[] {3,4,-1,1};
+    System.out.println(firstMissingPositive(arr));
+    arr = new int[] {7,8,9,11,12};
+    System.out.println(firstMissingPositive(arr));
+
+  }
+
+  public int firstMissingPositive(int[] nums) {
+
+    //First add all the numbers to a set
+    Set<Integer> set = new HashSet<>();
+    for(int i : nums)
+      set.add(i);
+
+    //Now step through to the max possible value
+    for(int i = 1; i <= nums.length; i++) {
+      //If we can place the number in the set then it is the first smallest
+      //missing integer
+      if(set.add(i)) {
+        return i;
+      }
+    }
+
+    //If there wasnt a particular one then the first missing positive is the
+    //next number after the end of the array
+    return nums.length + 1;
+  }
+
+}
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Notes
+-----
+Easy.
+
+Complexity:
+-----------
+The complexity is O(n).

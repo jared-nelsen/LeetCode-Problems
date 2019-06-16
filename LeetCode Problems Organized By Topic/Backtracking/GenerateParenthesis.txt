@@ -1,0 +1,83 @@
+Generate Parenthesis - Medium Problem                                 	      Backtracking
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Given n pairs of parentheses, write a function to generate all combinations of 
+well-formed parentheses.
+
+For example, given n = 3, a solution set is:
+
+[
+  "((()))",
+  "(()())",
+  "(())()",
+  "()(())",
+  "()()()"
+]
+			 
+------------------------------------------------------------------------------------------
+
+Solution
+--------
+
+import java.util.*;
+
+public class GenerateParenthesis {
+ 
+  public static void main(String[] args) {
+   new GenerateParenthesis(); 
+  }
+  
+  public GenerateParenthesis() {
+    
+    List<String> parens = generateParenthesis(3);
+    
+    for(String s : parens) {
+     System.out.println(s); 
+    }
+    
+  }
+  
+  public List<String> generateParenthesis(int n) {
+    List<String> result = new ArrayList<>();
+    backtrack("", n, n, result);
+    return result;
+  }
+  
+  private void backtrack(String str, int right, int left, List<String> result) {
+    
+    //We are out of right parens so stop the tree traversal
+    if (right == 0)
+      result.add(str);           
+  
+    if (left > 0)
+      //We've added a left one so recur with one less left one
+      backtrack(str + "(", right, left - 1, result);
+    if (right > 0 && right > left)
+      //We've added a right one so recur with one less right one
+      backtrack(str + ")", right - 1, left, result);
+   
+  }
+  
+}
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Notes
+-----
+
+All backtracking problems are tree traversal problems!
+
+Oftentimes when we are simulating iteration with recursion it is easier to count down
+rather than up.
+
+Complexity:
+-----------
+We backtrack 2 times for every N backtracks so it is O(2^n). One easy way to derive this
+is to inspect the structure of the code. There are two backtracking calls per backtrack
+and N backtracks.
+

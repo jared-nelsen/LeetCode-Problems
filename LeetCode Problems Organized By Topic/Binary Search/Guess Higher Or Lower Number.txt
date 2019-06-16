@@ -1,0 +1,59 @@
+Guess Number Higher Or Lower - Easy Problem				                  Binary Search
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+We are playing the Guess Game. The game is as follows:
+
+I pick a number from 1 to n. You have to guess which number I picked.
+
+Every time you guess wrong, I'll tell you whether the number is higher or lower.
+
+You call a pre-defined API guess(int num) which returns 3 possible results (-1, 1, or 0):
+
+-1 : My number is lower
+ 1 : My number is higher
+ 0 : Congrats! You got it!
+Example :
+
+Input: n = 10, pick = 6
+Output: 6
+
+------------------------------------------------------------------------------------------
+
+Solution
+------------
+
+public class Solution extends GuessGame {
+    public int guessNumber(int n) {
+       int result = -1;
+       int left = 1;
+       int right = n;         
+       int middle = 0;
+       while(result != 0) {
+          middle = left + (right - left) / 2;
+          result = guess(middle);
+          if(result == -1) {
+              right = middle - 1;
+          }
+          else if(result == 1) {
+              left = middle + 1;
+          } 
+       }
+       return middle; 
+    }
+}
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Notes
+-----
+My solution was a little different in that I actually filled in an array of 0 to N
+and searched that. It still would have worked but it exceeded the dumb memory limit.
+I need to wrap my head around Binary Searching whacky pseudo sorted or virtual arrays.
+
+Complexity:
+-----------
+O(log n) because we are doing binary search.

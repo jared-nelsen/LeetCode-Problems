@@ -1,0 +1,103 @@
+Find the Duplicate Number - Medium Problem                             		Binary Search
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Given an array nums containing n + 1 integers where each integer is between 1 and n 
+(inclusive), prove that at least one duplicate number must exist. Assume that there 
+is only one duplicate number, find the duplicate one.
+
+Example 1:
+
+Input: [1,3,4,2,2]
+Output: 2
+Example 2:
+
+Input: [3,1,3,4,2]
+Output: 3
+Note:
+
+You must not modify the array (assume the array is read only).
+You must use only constant, O(1) extra space.
+Your runtime complexity should be less than O(n2).
+There is only one duplicate number in the array, but it could be repeated more than once.
+			 
+------------------------------------------------------------------------------------------
+
+Solution
+--------
+
+//Okay so I have devised an n log n algorithm. Iterate through the array.
+//Binary search each element. If the binary search provides an index that is
+// not the element you used then there is more than one
+
+import java.util.*;
+
+public class FindTheDuplicateNumber {
+ 
+  public static void main(String[] args) {
+    
+    int[] arr = {1,3,4,2,2};
+    System.out.println(findDuplicate(arr));
+    
+    int[] arr2 = {3,1,3,4,2};
+    System.out.println(findDuplicate(arr2));
+    
+  }
+  
+  public static int findDuplicate(int[] nums) {
+    
+    if(nums == null || nums.length == 0)
+      return - 1; //??
+    
+    Arrays.sort(nums);
+    
+    Set<Integer> hash = new HashSet<>();
+    for(int i = 0; i < nums.length; i++)  {
+      int search = findIndexBS(nums, nums[i]);
+      
+      if(hash.contains(search))
+        return nums[search];
+      else
+        hash.add(search);
+    }
+    
+    return -1;
+  }
+  
+  public static int findIndexBS(int[] nums, int search) {
+    
+   int start = 0;
+   int end = nums.length - 1;
+   
+   while(start <= end) {
+     
+     int middle = (start + end) / 2;
+     
+     if(search < nums[middle])
+       end = middle - 1;
+     
+     if(search > nums[middle])
+       start = middle + 1;
+     
+     if(search == nums[middle])
+       return middle;
+   }
+    
+   return - 1;
+  }
+  
+}
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Notes
+-----
+Whenever there is an array involved and you are looking for something in it, think
+sort then binary search!
+
+Complexity:
+-----------
+Because we are sorting the array before searching it with Binary Search it is O(n log n)
+for merge sort.

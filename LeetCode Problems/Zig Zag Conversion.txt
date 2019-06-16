@@ -1,0 +1,106 @@
+ZigZag Conversion                                                   Dumb Tricky Stuff
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of
+rows like this: (you may want to display this pattern in a fixed font for better
+ legibility)
+
+P   A   H   N
+A P L S I I G
+Y   I   R
+
+And then read line by line: "PAHNAPLSIIGYIR"
+
+Write the code that will take a string and make this conversion given a number of rows:
+
+string convert(string s, int numRows);
+
+Example 1:
+
+Input: s = "PAYPALISHIRING", numRows = 3
+Output: "PAHNAPLSIIGYIR"
+
+Example 2:
+
+Input: s = "PAYPALISHIRING", numRows = 4
+Output: "PINALSIGYAHRPI"
+Explanation:
+
+P     I    N
+A   L S  I G
+Y A   H R
+P     I
+
+
+
+------------------------------------------------------------------------------------------
+
+Solution
+------------
+
+
+public class ZigZagConversion {
+
+  public static void main(String[] args) {
+   new ZigZagConversion();
+  }
+
+  public ZigZagConversion() {
+
+    String test = "PAYPALISHIRING";
+    System.out.println(convert(test, 3));
+    System.out.println(convert(test, 4));
+  }
+
+  public String convert(String s, int numRows) {
+
+    //Create a stringbuilder for each row
+    StringBuilder[] sbs = new StringBuilder[numRows];
+
+    for(int i = 0; i < numRows; i++)
+      sbs[i] = new StringBuilder();
+
+    int stringIndex = 0, index = 0;
+    boolean up = false;
+    while(stringIndex < s.length()) {
+      //At the start we are going down
+      if(index == 0)
+        up = false;
+      //At the end we are going up
+      if(index == numRows - 1)
+        up = true;
+
+      //Append the character from the string to the stringbuilder at the index
+      sbs[index].append(s.charAt(stringIndex));
+
+      if(up)
+        index--;
+      else
+        index++;
+
+      if(numRows == 1)
+        index = 0;
+
+      stringIndex++;
+    }
+
+    //Collate all of the results into a new string
+    StringBuilder result = new StringBuilder();
+    for(StringBuilder ss : sbs)
+      result.append(ss);
+
+    return result.toString();
+  }
+
+}
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Complexity:
+-----------
+O(n)

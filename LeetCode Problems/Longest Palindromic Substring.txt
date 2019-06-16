@@ -1,0 +1,99 @@
+Longest Palindromic Substring                                  Failed Dynamic Programming
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Given a string s, find the longest palindromic substring in s. You may assume that the
+maximum length of s is 1000.
+
+Example 1:
+
+Input: "babad"
+Output: "bab"
+Note: "aba" is also a valid answer.
+Example 2:
+
+Input: "cbbd"
+Output: "bb"
+
+------------------------------------------------------------------------------------------
+
+Solution
+------------
+
+import java.util.*;
+
+public class LongestPalindromicSubstring {
+ 
+  public static void main(String[] args) {
+   new LongestPalindromicSubstring(); 
+  }
+  
+  public LongestPalindromicSubstring() {
+    String test = "babad";
+    System.out.println(longestPalindrome(test));
+  }
+  
+  public String longestPalindrome(String s) {
+   
+    char[] chars = s.toCharArray();
+    
+    List<String> palindromes = new ArrayList<>();
+    for(int i = 0; i < chars.length; i++) {
+      
+      for(int j = 0; j < chars.length; j++) {
+        String subString = sub(chars, i, j);
+
+        if(isPalindrome(subString))
+          palindromes.add(subString);
+      }
+      
+    }
+    
+    String longest = "";
+    for(String test : palindromes) {
+      if(test.length() > longest.length()) {
+         longest = test;
+      }
+    }
+    
+    return longest;
+  }
+  
+  public String sub(char[] arr, int from, int to) {
+    StringBuilder b = new StringBuilder();
+    for(int i = from; i <= to; i++) {
+     b.append(arr[i]); 
+    }
+    return b.toString();
+  }
+  
+  public boolean isPalindrome(String s) {
+    
+    StringBuilder b = new StringBuilder(s);
+   String s2 = b.reverse().toString();
+   
+   for(int i = 0; i < s.length(); i++) {
+    if(s.charAt(i) != s2.charAt(i))
+      return false;
+   }
+   
+   return true;
+  }
+  
+}
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Notes:
+------
+Got my ass kicked on this one. Only came up with the N^3 solution. This is a dynamic
+programming problem and I couldnt find a way to use DP here. I looked and I liked
+to "Expand around the center" solution better than mine.
+
+Complexity:
+-----------
+With this solution, the complexity is O(n^3).

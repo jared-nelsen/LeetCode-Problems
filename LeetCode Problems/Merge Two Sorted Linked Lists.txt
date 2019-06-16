@@ -1,0 +1,64 @@
+Merge Two Sorted Lists                                                      Linked Lists
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Merge two sorted linked lists and return it as a new list. The new list should be made by
+splicing together the nodes of the first two lists.
+
+Example:
+
+Input: 1->2->4, 1->3->4
+Output: 1->1->2->3->4->4
+
+------------------------------------------------------------------------------------------
+
+Solution
+--------
+
+public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+
+  //Create a fake node to attach the list to
+  ListNode fakeNode = new ListNode(0);
+
+  //Set the current node to the fake node
+  ListNode current = fakeNode;
+  while(l1 != null && l2 != null)  {
+
+    //If the 1st value is less than or equal to the second
+    if(l1.val <= l2.val) {
+      //Then set the next to the first one
+     current.next = l1;
+     //Increment past the node
+     l1 = l1.next;
+    } else {
+      //Else set the next to the head of the second one
+      current.next = l2;
+      //Increment past the node
+      l2 = l2.next;
+    }
+
+    //Move to the node just inserted
+    current = current.next;
+  }
+
+  if(l1 != null)
+    current.next = l1;
+  else if(l2 != null)
+    current.next = l2;
+
+  //Return the list attached to the fake node
+  return fakeNode.next;
+
+  }
+
+}
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Complexity:
+-----------
+O(n)

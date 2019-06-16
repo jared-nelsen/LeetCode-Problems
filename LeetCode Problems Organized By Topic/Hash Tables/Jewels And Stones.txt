@@ -1,0 +1,80 @@
+Jewels and Stones - Easy Problem                                	      Hash Table
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+You're given strings J representing the types of stones that are jewels, and S
+representing the stones you have.  Each character in S is a type of stone you have.
+  You want to know how many of the stones you have are also jewels.
+
+The letters in J are guaranteed distinct, and all characters in J and S are letters.
+ Letters are case sensitive, so "a" is considered a different type of stone from "A".
+
+Example 1:
+
+Input: J = "aA", S = "aAAbbbb"
+Output: 3
+
+Example 2:
+
+Input: J = "z", S = "ZZ"
+Output: 0
+
+Note:
+
+    S and J will consist of letters and have length at most 50.
+    The characters in J are distinct.
+
+------------------------------------------------------------------------------------------
+
+Solution
+--------
+
+import java.util.*;
+
+public class JewelsAndStones {
+
+  public static void main(String[] args){
+    new JewelsAndStones();
+  }
+
+  public JewelsAndStones() {
+    String j = "aA";
+    String s = "aAAbbbb";
+    System.out.println(numJewelsInStones(j, s));
+
+    j = "z";
+    s = "ZZ";
+
+    System.out.println(numJewelsInStones(j, s));
+  }
+
+  public int numJewelsInStones(String J, String S) {
+
+    Set<Character> jewels = new HashSet<>();
+    for(int i = 0; i < J.length(); i++)
+      jewels.add(J.charAt(i));
+
+    int numJewels = 0;
+    for(int i = 0; i < S.length(); i++) {
+      if(jewels.contains(S.charAt(i)))
+        numJewels++;
+    }
+
+    return numJewels;
+  }
+
+}
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Notes
+-----
+Easy!
+
+Complexity:
+-----------
+The complexity is O(n^2) because we are doing string.contains in an order n loop.

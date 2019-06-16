@@ -1,0 +1,99 @@
+Valid Bracket String - Medium Problem                                 	      Backtracking
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Given a string containing just the characters '(', ')', '{', '}', '[' and ']',
+determine if the input string is valid.
+
+An input string is valid if:
+
+    Open brackets must be closed by the same type of brackets.
+    Open brackets must be closed in the correct order.
+
+Note that an empty string is also considered valid.
+
+Example 1:
+
+Input: "()"
+Output: true
+
+Example 2:
+
+Input: "()[]{}"
+Output: true
+
+Example 3:
+
+Input: "(]"
+Output: false
+
+Example 4:
+
+Input: "([)]"
+Output: false
+
+Example 5:
+
+Input: "{[]}"
+Output: true
+
+------------------------------------------------------------------------------------------
+
+Solution
+--------
+
+import java.util.*;
+
+public class GenerateParenthesis {
+
+  public static void main(String[] args) {
+   new GenerateParenthesis();
+  }
+
+  public GenerateParenthesis() {
+
+    List<String> parens = generateParenthesis(3);
+
+    for(String s : parens) {
+     System.out.println(s);
+    }
+
+  }
+
+  public List<String> generateParenthesis(int n) {
+    List<String> result = new ArrayList<>();
+    backtrack("", n, n, result);
+    return result;
+  }
+
+  private void backtrack(String str, int right, int left, List<String> result) {
+
+    //We are out of right parens so stop the tree traversal
+    if (right == 0)
+      result.add(str);
+
+    if (left > 0)
+      //We've added a left one so recur with one less left one
+      backtrack(str + "(", right, left - 1, result);
+    if (right > 0 && right > left)
+      //We've added a right one so recur with one less right one
+      backtrack(str + ")", right - 1, left, result);
+
+  }
+
+}
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Notes
+-----
+
+All backtracking problems are tree traversal problems!
+
+Complexity:
+-----------
+O(2^n)

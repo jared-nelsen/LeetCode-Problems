@@ -1,0 +1,74 @@
+Group Anagrams - Medium Problem               					HashMaps and String Sorting
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Given an array of strings, group anagrams together.
+
+Example:
+
+Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
+Output:
+[
+  ["ate","eat","tea"],
+  ["nat","tan"],
+  ["bat"]
+]
+			 
+------------------------------------------------------------------------------------------
+
+Solution
+--------
+
+import java.util.*;
+
+public class GroupAnagrams {
+ 
+  public static void main(String[] args) {
+    
+    String[] arr = {"eat","tea","tan","ate","nat","bat"};
+    List<List<String>> groups = groupAnagrams(arr);
+    
+    for(List<String> group : groups){
+      for(String s : group) {
+       System.out.print(s + " " );
+      }
+      System.out.println();
+    }
+  }
+  
+  public static List<List<String>> groupAnagrams(String[] strs) {
+
+    if(strs.length == 0)
+      return new ArrayList();
+    
+    Map<String, List> answer = new HashMap<>();
+    //For each String
+    for(String s : strs) {
+     //Create a char array of the string and sort it
+     char[] array = s.toCharArray();
+     Arrays.sort(array);
+     String key = String.valueOf(array);
+     
+     //Check to see if the map contains the key
+     if(!answer.containsKey(key))
+       //If it does not then create a new list in the map
+       answer.put(key, new ArrayList());
+     
+     //Add the original String to the list in the map represented by the sorted key.
+     answer.get(key).add(s);
+    }
+    
+    return new ArrayList(answer.values());
+  }
+    
+}
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Complexity:
+-----------
+The complexity is O(n + n log n) or O(2n log n). We are doing mergesort in the O(n)
+loop.

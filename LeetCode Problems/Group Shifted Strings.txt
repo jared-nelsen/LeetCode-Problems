@@ -1,0 +1,111 @@
+Group Shifted Strings                                                 Hash Tables
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Given a string, we can "shift" each of its letter to its successive letter,
+for example: "abc" -> "bcd". We can keep "shifting" which forms the sequence:
+
+"abc" -> "bcd" -> ... -> "xyz"
+Given a list of strings which contains only lowercase alphabets, group all 
+strings that belong to the same shifting sequence.
+
+Example:
+
+Input: ["abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"],
+Output: 
+[
+  ["abc","bcd","xyz"],
+  ["az","ba"],
+  ["acef"],
+  ["a","z"]
+]
+
+------------------------------------------------------------------------------------------
+
+Solution
+------------
+
+//This is a rather straightforward problem but it requires a fair bit of programming
+//to get it working. For each element in the sting array, create a hash table. While
+//that string is not equal to the original string, shift each letter to the right one
+//and store it in the hash table. For each string in the string array, search through
+//the rest of the array for a string of equal length. When you reach a new item, search
+//for that string in the corresponding hash table. If it contains the String then add that
+//String to the list corresponding to that string.
+
+//A hashMap of Strings mapped to a list of strings would help. Then for each item in the
+//list we just do an order n comparison with the hashmaps in the map and if it contains
+//the string then place it in the corresponding list
+
+import java.util.*;
+
+public class GroupShiftedStrings {
+  
+  public static void main(String[] args) {
+    new GroupShiftedStrings();
+  }
+  
+  public GroupShiftedStrings() {
+    
+    String[] arr = new String[]{"abc","bcd","acef","xyz","az","ba","a","z"};
+    
+    List<List<String>> groups = groupStrings(arr);
+  }
+  
+  public List<List<String>> groupStrings(String[] strings) {
+    
+    Map<HashSet<String>, ArrayList<String>> setToLists = new HashMap<>();
+    
+    //Enumerate all possible shifts for each string.
+    Set<String> shifts = new HashSet<>();
+    for(String s : strings) {
+      
+    }
+
+    return null;
+  }
+  
+  public Set<String> allPossibleShifts(String s) {
+    Set<String> set = new HashSet<>();
+    
+    String test = s;
+    s = shiftRight(s);
+    while(!s.equals(test)) {
+     set.add(s);
+     s = shiftRight(s);
+    }
+    set.add(test);
+    
+    return set;
+  }
+  
+  public String shiftRight(String s) {
+   
+    StringBuilder sb = new StringBuilder();
+    for(int i = 0; i < s.length(); i++){
+      char c = s.charAt(i);
+     if(c == 'z')
+       sb.append('a');
+     else {
+       sb.append((char)(c + 1));
+     }
+    }
+    
+    return sb.toString();
+  }
+}
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Notes:
+------
+Got the gist of this one quickly.
+
+Complexity:
+-----------
+shiftRight is O(n). AllPossibleShifts is O(n). groupStrings is O(n). It would have
+been preferable if I had completed the code in time to do the whole analysis.

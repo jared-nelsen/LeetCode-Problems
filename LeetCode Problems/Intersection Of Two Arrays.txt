@@ -1,0 +1,98 @@
+Intersection of Two Arrays - Easy Problem                                	  Hash Sets
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Given two arrays, write a function to compute their intersection.
+
+Example 1:
+
+Input: nums1 = [1,2,2,1], nums2 = [2,2]
+Output: [2]
+
+Example 2:
+
+Input: nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+Output: [9,4]
+
+Note:
+
+    Each element in the result must be unique.
+    The result can be in any order.
+
+
+------------------------------------------------------------------------------------------
+
+Solution
+--------
+
+import java.util.*;
+
+public class IntersectionOfTwoArrays {
+
+  public static void main(String[] args) {
+    new IntersectionOfTwoArrays();
+  }
+
+  public IntersectionOfTwoArrays() {
+
+    int[] nums1 = new int[]{1,2,2,1};
+    int[] nums2 = new int[]{2,2};
+
+    printArray(intersection(nums1, nums2));
+
+    nums1 = new int[]{4,9,5};
+    nums2 = new int[]{9,4,9,8,4};
+
+    printArray(intersection(nums1, nums2));
+  }
+
+  public void printArray(int[] arr) {
+    System.out.println();
+    for(Integer i : arr)
+      System.out.println(i + " ");
+  }
+
+  public int[] intersection(int[] nums1, int[] nums2)  {
+
+    Set<Integer> set = new HashSet<>();
+    for(int i = 0; i < nums1.length; i++) {
+      set.add(nums1[i]);
+    }
+
+    Set<Integer> set2 = new HashSet<>();
+    for(int i = 0; i < nums2.length; i++){
+     set2.add(nums2[i]);
+    }
+
+    List<Integer> list = new ArrayList<>();
+    Iterator<Integer> it = set2.iterator();
+    while(it.hasNext()){
+     Integer next = it.next();
+     if(set.contains(next)){
+      list.add(next);
+     }
+    }
+
+    int[] result = new int[list.size()];
+    for(int i = 0; i < list.size(); i++) {
+     result[i] = list.get(i);
+    }
+
+    return result;
+  }
+
+}
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Notes
+-----
+Easy!
+
+Complexity:
+-----------
+The complexity is O(n).

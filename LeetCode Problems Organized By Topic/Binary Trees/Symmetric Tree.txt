@@ -1,0 +1,57 @@
+Symmetric Tree - Easy Problem											    BSTs and Recursion
+---------------
+---------------
+Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+
+For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
+
+    1
+   / \
+  2   2
+ / \ / \
+3  4 4  3
+
+But the following [1,2,2,null,3,null,3] is not:
+
+    1
+   / \
+  2   2
+   \   \
+   3    3
+   
+Note:
+Bonus points if you could solve it both recursively and iteratively.
+
+--------------------------------------------------------------------------------------------------
+
+Solution
+--------
+
+    public boolean isSymmetric(TreeNode root) {
+      return isMirror(root, root);  
+    }
+    
+    
+    public boolean isMirror(TreeNode left, TreeNode right) {
+        
+        //If the roots are both null then they are mirrors of each other
+        if(left == null && right == null)
+            return true;
+        //If the tree is lopsided then they are not mirrors
+        if(left == null || right == null)
+            return false;
+        
+        //If the values are the same and the left subtree is a mirror
+        //and the right subtree is a mirror
+        return (left.val == right.val) &&
+            isMirror(left.right, right.left) &&
+            isMirror(left.left, right.right);
+        
+    }
+	
+------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+
+Complexity:
+-----------
+O(2^n)

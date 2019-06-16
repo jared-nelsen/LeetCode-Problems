@@ -1,0 +1,68 @@
+Maximum Product Subarray                                         Summarized Dynamic Programming
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Given an integer array nums, find the contiguous subarray within an array (containing at 
+least one number) which has the largest product.
+
+Example 1:
+
+Input: [2,3,-2,4]
+Output: 6
+Explanation: [2,3] has the largest product 6.
+Example 2:
+
+Input: [-2,0,-1]
+Output: 0
+Explanation: The result cannot be 2, because [-2,-1] is not a subarray.
+
+------------------------------------------------------------------------------------------
+
+Summary
+------------
+
+	This was a problem that I ran into some sticky array work on so I am just summarizing it.
+	This is obviously a dynamic programming problem. Contiguity can be broken down into smaller
+	and unary elements. Then you can build it up from there using a hashmap. To do this, create
+	a hashmap of HashMap<int[], Integer> dp = new HashMap(); to store computed results in. Then
+	we iterate through the array and create all possible subarray. Keep track of the max product
+	as we compute greater and greater products. Create a function that fills in an array of indeces
+	as you go. To calculate a product, just get the previous subarray from the hashmap and calculate
+	the product with what you find there.
+	
+	int maxProduct = 0;
+	for(int i = 0; i < arr.length; i++) {
+		for(int j = 0; j < arr.length; j++) {
+			if(i > j)
+				continue;
+				
+			int[] indeces = createIndeceArray(i, j - 1);
+			int product = 0;
+			if(dp.contains(indeces))
+			{
+				int productA = dp.get(indeces);
+				product = productA * nums[j];
+	
+			} else {
+				product = multiply each element of indeces
+				
+			}
+			
+			if(product > maxProduct) {
+				maxProduct = product
+			}
+		}
+	}
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Complexity:
+-----------
+At first glance it seems that this is n^2 but with the dp it is reduced. But I dont
+really know how to analyze complexities with DP.
+
+My guess would be that it is reduced to O(n)

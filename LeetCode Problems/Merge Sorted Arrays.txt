@@ -1,0 +1,82 @@
+Merge Sorted Array - Easy Problem								Simple Array Manipulation
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as one sorted array.
+
+Note:
+
+The number of elements initialized in nums1 and nums2 are m and n respectively.
+You may assume that nums1 has enough space (size that is greater or equal to m + n)
+to hold additional elements from nums2.
+
+Example:
+
+Input:
+nums1 = [1,2,3,0,0,0], m = 3
+nums2 = [2,5,6],       n = 3
+
+Output: [1,2,2,3,5,6]
+			 
+------------------------------------------------------------------------------------------
+
+Solution
+--------
+
+//Okay so we have two arrays that are passed in. Each array has only a certain
+//number of elements initialized. The array we are passing back out is the
+//nums1 array. To add the elements of the second array to the first array,
+//start adding at index m
+
+import java.util.*;
+
+public class MergeSortedArray {
+ 
+  public static void main(String[] args) {
+   new MergeSortedArray(); 
+  }
+  
+  public MergeSortedArray() {
+    
+    int[] nums1 = {1,2,3,0,0,0};
+    int[] nums2 = {2,5,6};
+    int m = 3;
+    int n = 3;
+    
+    merge(nums1, m, nums2, n);
+    
+    for(int i = 0; i < nums1.length; i++)
+      System.out.print(nums1[i] + " ");
+    
+  }
+  
+  public void merge(int[] nums1, int m, int[] nums2, int n) {
+   
+    for(int i = 0; i < n; i++) {
+     nums1[i + m] = nums2[i]; 
+    }
+   
+    Arrays.sort(nums1);
+  }
+  
+}
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Notes
+-----
+This is the easy and obvious approach. Others did it with a single pass. It I were
+to do the same I would start at the beginning and work my way forwards. I would keep
+a temp int with me. At each index I would compare the two items at the index in both
+arrays. I would replace the smaller one in the nums1 array and set the replaced item
+as the temp. Each comparison would compare the temp, nums1[i] and nums2[i] to see
+which is the smaller one and I would add that one.
+
+This is a good example to brute force first to show that I understand the problem
+and then to forge ahead with a trickier solution.
+
+Complexity:
+-----------
+At present the algortihm is O(n).

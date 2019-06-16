@@ -1,0 +1,108 @@
+Subsets - Medium Problem                          Recursion, Backtracking, Sets, Prefixes
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Given a set of distinct integers, nums, return all possible subsets (the power set).
+
+Note: The solution set must not contain duplicate subsets.
+
+Example:
+
+Input: nums = [1,2,3]
+Output:
+[
+  [3],
+  [1],
+  [2],
+  [1,2,3],
+  [1,3],
+  [2,3],
+  [1,2],
+  []
+]
+			 
+------------------------------------------------------------------------------------------
+
+Solution
+--------
+
+
+import java.util.*;
+
+public class Subsets {
+ 
+  public static void main(String[] args) {
+   new Subsets(); 
+  }
+  
+  public Subsets(){
+    
+    int[] x = new int[] {1,2,3};
+    System.out.println();
+    printSubsets(subsets(x));
+  }
+  
+  public void printSubsets(List<List<Integer>> subsets) 
+    for(List<Integer> l : subsets){
+      for(Integer i : l) {
+       System.out.print(i + " "); 
+      }
+      System.out.println();
+    }
+  }
+  
+  public void printSet(List<Integer> set) {
+    
+    for(Integer i : set)
+      System.out.print(i + " ");
+    
+    System.out.println();
+  }
+  
+  public List<List<Integer>> subsets(int[] nums) {
+    
+    List<List<Integer>> subsets = new ArrayList<>();
+    accumulate(subsets, nums, new ArrayList<>(), 0);
+    return subsets;
+    
+  }
+  
+  public void accumulate(List<List<Integer>> subsets, int[] nums, List<Integer> set, int start) {
+
+    //For items remaining in the array
+    for(int i = start; i < nums.length; i++){
+     //Add it to the set
+     set.add(nums[i]);
+     //And add the remaining items to the set
+     accumulate(subsets, nums, set, i + 1);
+     //Step back at this level so the next time around we start with a different prefix
+     set.remove(set.size() - 1);
+    }
+    
+    //Add the built subset to the subset list
+    subsets.add(new ArrayList<>(set));
+    
+  }
+  
+}
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Notes:
+------
+This one was really difficult for me. I had to give up and look at the solution. My
+mistake was that I didnt consider that what I was dealing with was a prefix problem.
+I had my loop at the wrong level. I spend a lot of time trying to puzzle the mechanism
+of how it should work in my head which was a mistake.
+
+I should read up on string prefix problems and algorithms and study this one in detail
+by drawing it out by hand. I know prefix problems and set problems will come up again
+in force so I should prepare for them.
+
+Complexity:
+-----------
+O(n^n)

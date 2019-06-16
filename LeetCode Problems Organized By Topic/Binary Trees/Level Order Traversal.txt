@@ -1,0 +1,64 @@
+Level Order Traversal - Medium Problem                           			Binary Trees
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Given a string s, partition s such that every substring of the partition is a palindrome.
+
+Return all possible palindrome partitioning of s.
+
+Example:
+
+Input: "aab"
+Output:
+[
+  ["aa","b"],
+  ["a","a","b"]
+]
+
+------------------------------------------------------------------------------------------
+
+Solution
+------------
+
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        Map<Integer, List<Integer>> levelLists = new LinkedHashMap<>();
+        gather(levelLists, root, 0);
+        
+
+        List<List<Integer>> y = new ArrayList<>(levelLists.values());
+        return y;
+    }
+    
+    public void gather(Map<Integer, List<Integer>> levelLists, TreeNode root, int level){
+        
+        if(root == null)
+            return;
+        
+        //Add the root to the relavant list
+        if(levelLists.containsKey(level)){
+            levelLists.get(level).add(root.val);
+        } else {
+            List<Integer> list = new ArrayList<>();
+            list.add(root.val);
+            levelLists.put(level, list);
+        }
+        
+        gather(levelLists, root.left, level + 1);
+        gather(levelLists, root.right, level + 1);
+    }
+}
+	
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Notes:
+------
+Easy.
+
+Complexity:
+-----------
+The complexity is O(2^n).

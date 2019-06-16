@@ -1,0 +1,101 @@
+Subarray Sum Equals K - Medium Problem                                               HashMaps
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Given an array of integers and an integer k, you need to find the total number of
+continuous subarrays whose sum equals to k.
+
+Example 1:
+
+Input:nums = [1,1,1], k = 2
+Output: 2
+
+Note:
+
+    The length of the array is in range [1, 20,000].
+    The range of numbers in the array is [-1000, 1000] and the range of the integer
+    k is [-1e7, 1e7].
+
+
+------------------------------------------------------------------------------------------
+
+Solution
+--------
+
+
+//Okay so the brute force approach would be to just enumerate
+// all subarrays and iterate through them to calculate their
+// sums. This would be n^2. But we can do better by hashing.
+//We can use the Pair class to store the indeces of a subarray
+//The recurrence relation of the sum of an array, subarray or
+//not is sum(i, j) = sum(i, j - 1).
+
+import java.util.*;
+import javafx.util.*;
+
+public class SubarraySumEqualsK {
+
+  public static void main(String[] args){
+   new SubarraySumEqualsK();
+  }
+
+  public SubarraySumEqualsK(){
+    int[] arr = new int[]{1,1,1};
+    subarraySum(arr, 2);
+    //System.out.println(subarraySum(arr, 2));
+  }
+
+  public int subarraySum(int[] nums, int k) {
+
+    //Create a hashTable to store the indeces mapped to the sum
+    //of the described sub array
+    Map<Pair<Integer, Integer>, Integer> map = new HashMap<>();
+
+    int total = 0;
+    for(int i = 0; i < nums.length; i++) {
+      for(int j = 0; j < nums.length; j++) {
+       if(i < j)
+         continue;
+       Pair p = new Pair(i, j - 1);
+       if(map.containsKey(p)) {
+         map.put(new Pair(i, j), map.get(p) + nums[j]);
+       } else {
+        Pair p1 = new Pair(i, j);
+        int sum = sumArray(nums, i, j);
+        map.put(p1, sum);
+       }
+      }
+    }
+
+    List<Integer> values = new ArrayList<>(map.values());
+    for(Integer i : values) {
+      System.out.println(i);
+     if(i == k)
+       total++;
+    }
+
+    return total;
+  }
+
+  //This is worst case O(n)
+  public int sumArray(int[] arr, int i, int j) {
+   int sum = 0;
+   for(int k = i; k <= j; k++)
+     sum += arr[k];
+   return sum;
+  }
+
+}
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Notes
+-----
+
+Complexity:
+-----------
+O(n)

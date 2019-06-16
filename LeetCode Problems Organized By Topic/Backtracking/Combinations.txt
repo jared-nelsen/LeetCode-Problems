@@ -1,0 +1,59 @@
+Combinations     -  Medium Problem                                         Backtracking
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
+
+Example:
+
+Input: n = 4, k = 2
+Output:
+[
+  [2,4],
+  [3,4],
+  [2,3],
+  [1,2],
+  [1,3],
+  [1,4],
+]
+
+------------------------------------------------------------------------------------------
+
+Solution
+------------
+
+class Solution {
+  public List<List<Integer>> combine(int n, int k) {
+    List<List<Integer>> combs = new ArrayList<>();
+    combine(combs, new ArrayList<Integer>(), 1, n, k);
+    return combs;
+  }
+  
+  public void combine(List<List<Integer>> combinations, List<Integer> combination, int start, int n, int k) {
+    if(k == 0){
+     combinations.add(new ArrayList<Integer>(combination));
+     return;
+    }
+    
+    for(int i = start; i <= n; i++) {
+     combination.add(i);
+     combine(combinations, combination, i + 1, n, k - 1);
+     combination.remove(combination.size() - 1);
+    }
+    
+  }
+}
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Notes:
+------
+This one was just plain tricky.
+
+Complexity:
+-----------
+O(n^n)

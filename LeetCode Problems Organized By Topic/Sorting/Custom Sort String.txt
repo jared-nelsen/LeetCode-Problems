@@ -1,0 +1,108 @@
+Best Time to Buy and Sell Stock                                           Mock Interview
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+S and T are strings composed of lowercase letters. In S, no letter occurs more than once.
+
+S was sorted in some custom order previously. We want to permute the characters of T so 
+that they match the order that S was sorted. More specifically, if x occurs before y in S,
+ then x should occur before y in the returned string.
+
+Return any permutation of T (as a string) that satisfies this property.
+
+Example :
+Input: 
+S = "cba"
+T = "abcd"
+Output: "cbad"
+Explanation: 
+"a", "b", "c" appear in S, so the order of "a", "b", "c" should be "c", "b", and "a". 
+Since "d" does not appear in S, it can be at any position in T. "dcba", "cdba", "cbda" 
+are also valid outputs.
+ 
+
+Note:
+
+S has length at most 26, and no character is repeated in S.
+T has length at most 200.
+S and T consist of lowercase letters only.
+			 
+------------------------------------------------------------------------------------------
+
+Solution
+--------
+
+
+import java.util.*;
+
+class CustomSortString {
+  
+  public static void main(String[] args) {
+    new CustomSortString();
+  }
+  
+  public CustomSortString() {
+   System.out.println( customSortString("cba", "abcd"));
+  }
+  
+  public String customSortString(String S, String T){
+    List<Character> letters = new ArrayList<>();
+    
+    for(int i = 0; i < S.length(); i++) {
+      letters.add(S.charAt(i));
+    }
+    
+    //We now have the letters of S in a sorted List
+    
+    List<Character> tLetters = new ArrayList<>();
+    List<Character> sorted = new ArrayList<>();
+      
+    for(int i = 0; i < T.length(); i++) {
+      tLetters.add(T.charAt(i));
+    }
+    
+    //Take a letter out of S
+    
+    for(Character c : letters) {
+      //Find it in T and place T char in sorted
+      Iterator itr = tLetters.iterator();
+      while(itr.hasNext()) {
+        Character t = (Character)itr.next();
+
+        if(t.equals(c))
+          sorted.add(t);
+      }
+    }
+    
+    List<Character> remaining = new ArrayList<>();
+    for(int i = 0; i < tLetters.size(); i++) {
+      if(!letters.contains(tLetters.get(i))) {
+        remaining.add(tLetters.get(i)); 
+      }
+    }
+    
+    //T is now in sorted order in sorted minus any remaining letters so add them now
+    for(int i = 0; i < remaining.size(); i++){
+      sorted.add(remaining.get(i));
+    }
+    
+    //Now add them to a String
+    StringBuilder b = new StringBuilder();
+    for(int i = 0; i < sorted.size(); i++){
+      b.append(sorted.get(i));
+    }
+    
+    return b.toString();
+  }
+  
+}
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Complexity:
+-----------
+The complexity is O(n^2) for the loop within a loop.

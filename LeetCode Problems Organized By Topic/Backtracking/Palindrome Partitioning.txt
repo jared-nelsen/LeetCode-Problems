@@ -1,0 +1,111 @@
+Palindrome Partitioning - Medium Problem                           			Backtracking
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Given a string s, partition s such that every substring of the partition is a palindrome.
+
+Return all possible palindrome partitioning of s.
+
+Example:
+
+Input: "aab"
+Output:
+[
+  ["aa","b"],
+  ["a","a","b"]
+]
+
+------------------------------------------------------------------------------------------
+
+Solution
+------------
+
+
+//We need to keep a list for each search of the string. At the end of that
+// search we add the list to the set of results. The recursion is triggered
+//at each index of the string starting with the whole string. We must permute
+//the rest of each string after we have checked if it is a palindrome or not.
+// The breakdown of this problem is:
+// 1. How do I check if a string is a palindrome
+// 2. What does a partition look like and what part of the string do we need
+//    to check?
+// 3. How do we know when we are done?
+
+import java.util.*;
+
+public class PalindromePartitioning {
+ 
+  public static void main(String[] args){
+    new PalindromePartitioning();
+  }
+  
+  public PalindromePartitioning(){
+    print(partitioning("aab"));
+  }
+  
+  public void print(List<List<String>> s){
+    for(List<String> l : s){
+      for(String s2 : l){
+       System.out.print(s2 + " "); 
+      }
+      System.out.println();
+    }
+  }
+  
+  public List<List<String>> partitioning(String s) {
+    List<List<String>> res = new ArrayList<>();
+    List<String> list = new ArrayList<>();
+    partitionHelper(res, list, s, 0);
+    return res;
+  }
+  
+  public void partitionHelper(List<List<String>> res, List<String> list, String s, int start){
+    
+    //If we are at the end of the string
+    if(start == s.length()){
+      //Add the built list to the results
+      res.add(new ArrayList<>(list));
+      return;
+    }
+    
+    for(int i = start; i < s.length(); i++){
+      //Check and see if it is a palindrome
+      if(isPalindrome(s.substring(start, i + 1))){
+        //If it is then add it to the list of palindromes for this search
+       list.add(s.substring(start, i + 1));
+       //Recurse with a smaller string
+       partitionHelper(res, list, s, i + 1);
+       //Remove the last result because we dont need it in this instance
+       list.remove(list.size() - 1);
+      }
+    }
+    
+  }
+  
+      public boolean isPalindrome(String s){
+        int start = 0, end = s.length()-1;
+        while(start <= end){
+            if(s.charAt(start) != s.charAt(end))
+                return false;
+            start++;
+            end--;
+        }
+        return true;
+    }
+  
+}
+	
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Complexity:
+-----------
+Stick with the algorithm. You know you need to build all the substrings in a repeated
+fashing and recursion is perfect for this. Break it down and solve the subproblems first.
+I got stuck on trying to reason about partitioning all of the possiblities at once but
+should have written it down on paper and solved it there.
+
+O(n^n)

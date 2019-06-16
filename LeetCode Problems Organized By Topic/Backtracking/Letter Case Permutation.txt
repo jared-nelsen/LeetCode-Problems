@@ -1,0 +1,93 @@
+Letter Case Permutation  - Easy Problem                         Backtracking
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Given a string S, we can transform every letter individually to be lowercase
+or uppercase to create another string.  Return a list of all possible strings we could create.
+
+Examples:
+Input: S = "a1b2"
+Output: ["a1b2", "a1B2", "A1b2", "A1B2"]
+
+Input: S = "3z4"
+Output: ["3z4", "3Z4"]
+
+Input: S = "12345"
+Output: ["12345"]
+Note:
+
+S will be a string with length between 1 and 12.
+S will consist only of letters or digits.
+
+------------------------------------------------------------------------------------------
+
+Solution
+------------
+
+//Okay so we must traverse through the string and recursively
+//set to uppercase or lowercase dependent on the case. The
+//base case will be when we hit the length of the input string.
+
+import java.util.*;
+
+public class LetterCasePermutation {
+  
+  public static void main(String[] args) {
+   new LetterCasePermutation(); 
+  }
+  
+  public LetterCasePermutation(){
+    String s = "a1b2";
+    printList(letterCasePermutation(s));
+    s = "3z4";
+    printList(letterCasePermutation(s));
+    s = "12345";
+    printList(letterCasePermutation(s));
+  }
+  
+  public void printList(List<String> list) {
+    for(String s : list) {
+     System.out.println(s); 
+    }
+    System.out.println();
+  }
+  
+  public List<String> letterCasePermutation(String s) {
+    List<String> results = new ArrayList<>();
+    traverse(results, "", s, 0);
+    return results;
+  }
+  
+  public void traverse(List<String> results, String current, String original, int index) {
+    
+    if(current.length() == original.length()){
+     results.add(current); 
+     return;
+    }
+    
+     Character c = original.charAt(index);
+     
+     if(Character.isDigit(c)) {
+       traverse(results, current + c, original, index + 1);
+     } else {
+       traverse(results, current + Character.toUpperCase(c), original, index + 1);
+       traverse(results, current + Character.toLowerCase(c), original, index + 1);
+     }
+
+  }
+  
+}
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Notes:
+------
+Easy peasy! Use recursion to generate permuations. Nailed this one!
+
+Complexity:
+-----------
+At worst, this is O(2^n).

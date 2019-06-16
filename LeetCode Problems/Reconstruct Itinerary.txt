@@ -1,0 +1,160 @@
+Reconstruct Itinerary                                         Queues and Depth First Search
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Given a list of airline tickets represented by pairs of departure and arrival airports
+ [from, to], reconstruct the itinerary in order. All of the tickets belong to a man who
+ departs from JFK. Thus, the itinerary must begin with JFK.
+
+Note:
+
+If there are multiple valid itineraries, you should return the itinerary that has the
+smallest lexical order when read as a single string. For example, the itinerary 
+["JFK", "LGA"] has a smaller lexical order than ["JFK", "LGB"].
+All airports are represented by three capital letters (IATA code).
+You may assume all tickets form at least one valid itinerary.
+Example 1:
+
+Input: [["MUC", "LHR"], ["JFK", "MUC"], ["SFO", "SJC"], ["LHR", "SFO"]]
+Output: ["JFK", "MUC", "LHR", "SFO", "SJC"]
+Example 2:
+
+Input: [["JFK","SFO"],["JFK","ATL"],["SFO","ATL"],["ATL","JFK"],["ATL","SFO"]]
+Output: ["JFK","ATL","JFK","SFO","ATL","SFO"]
+Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","SFO"].
+             But it is larger in lexical order.
+
+------------------------------------------------------------------------------------------
+
+Solution
+------------
+
+class Solution {
+    
+    public class Trip {
+        
+        public String start;
+        public String stop;
+        
+        public Trip(String start, String stop) {
+            this.start = start;
+            this.stop = stop;
+        }
+        
+        public void print(){
+            System.out.println(start + " " + stop);
+        }
+    }
+    
+    public List<String> findItinerary(List<List<String>> tickets) {
+        
+        if(tickets == null || tickets.size() == 0)
+            return new ArrayList<>();
+        
+        List<String> itinerary = new ArrayList<>();
+        
+        //Turn all tickets into trips
+        Queue<Trip> trips = new LinkedList<>();
+        for(List<String> ticket : tickets){
+            Trip trip = new Trip(ticket.get(0), ticket.get(1));
+            trips.add(trip);
+        }
+        
+        //Now we have all tickets in trip form
+        //Find the first trip by looking for jfk
+        Trip first = null;
+        while(!trips.isEmpty()){
+            Trip trip = trips.remove();
+            trip.print();
+            if(trip.start.equals("JFK")){
+                            trip.print();
+                first = trip;
+                break;
+            } else {
+                trips.add(trip);
+            }
+        }
+        itinerary.add(first.start);
+        itinerary.add(first.stop);
+        
+        //Now we have the first trip
+        Trip previous = first;
+        while(!trips.isEmpty())  {
+            Trip trip = trips.remove();
+            trip.print();
+            if(trip.start.equals(previous.stop)){
+                //We have found the next leg
+                //itinerary.add(trip.start);
+                itinerary.add(trip.stop);
+                previous = trip;
+            } else {
+                trips.add(trip);
+            }
+        }
+        
+        Collections.sort(itinerary);
+        
+        return itinerary;
+    }
+}
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Notes
+-----
+My above solution would work if it werent for the lexicographical component to the
+requirements. I didnt think it was worth the time to solve that. This was labeled
+as a DFS problem but it didnt really feel like one.
+
+Here is a DFS solution to it just for reference:
+
+---------------------------------------------------------------------------------------
+
+List<String> result;
+
+public List<String> findItinerary(String[][] tickets) {
+    result = new ArrayList<>();
+    Map<String, List<String>> map = new HashMap<>();
+    for (String[] ticket : tickets) {
+        if (!map.containsKey(ticket[0])) {
+            map.put(ticket[0], new ArrayList<>());
+        }
+        map.get(ticket[0]).add(ticket[1]);
+    }
+    for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+        Collections.sort(entry.getValue()); // 3.
+    }
+    findItineraryFrom("JFK", map, new ArrayList<>(), tickets.length);
+    result.add(0, "JFK");
+    return result;
+}
+
+private void findItineraryFrom(String start, Map<String, List<String>> map, List<String> curRes, int numTickets) {
+    if (curRes.size() == numTickets) { // 1.all tickets are used up
+        result.addAll(curRes);
+        return;
+    }
+    if (map.get(start) == null) { // 2.the path can not use up all tickets
+        return;
+    }
+    for (int i = 0; i < map.get(start).size(); i++) {
+        String dest = map.get(start).get(i);
+        map.get(start).remove(dest);
+        curRes.add(dest);
+        findItineraryFrom(dest, map, curRes, numTickets);
+        if (result.size() > 0) { // 4.the first valid path is the final answer
+            return;
+        }
+        map.get(start).add(i, dest);
+        curRes.remove(curRes.size() - 1);
+    }
+}
+
+
+Complexity:
+-----------
+My solution is O(n).

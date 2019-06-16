@@ -1,0 +1,74 @@
+Convert Sorted Array To BST                               Binary Trees, Depth First Search
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Given an array where elements are sorted in ascending order, convert it to a height
+balanced BST.
+
+For this problem, a height-balanced binary tree is defined as a binary tree in which
+the depth of the two subtrees of every node never differ by more than 1.
+
+Example:
+
+Given the sorted array: [-10,-3,0,5,9],
+
+One possible answer is: [0,-3,9,-10,null,5], which represents the following height
+balanced BST:
+
+      0
+     / \
+   -3   9
+   /   /
+ -10  5
+
+------------------------------------------------------------------------------------------
+
+Solution
+------------
+
+class Solution {
+    public TreeNode sortedArrayToBST(int[] nums) {
+        
+        if (nums == null){
+            return null;
+        }
+        
+        if (nums.length == 0) {
+            return null;
+        }
+        
+        TreeNode root = createBST(nums, 0, nums.length - 1);
+        return root;
+    }
+    
+    private TreeNode createBST(int[] nums, int start, int end) {
+        
+        if (start > end) {
+            return null;
+        }
+        
+        int midIndex = start + (end - start) / 2; 
+        int val = nums[midIndex];
+        
+        TreeNode node = new TreeNode(val);
+        node.left = createBST(nums, start, midIndex - 1);
+        node.right = createBST(nums, midIndex + 1, end);
+        
+        return node;
+    }
+}
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Notes
+-----
+Didnt get this one. I should have looked at the example for a pattern on how to build
+it from a sorted array and constructed my algorithm from there.
+
+Complexity:
+-----------
+O(2^n)

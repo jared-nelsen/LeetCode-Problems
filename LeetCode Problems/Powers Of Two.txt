@@ -1,0 +1,60 @@
+Power of Two - Easy Problem											 Bitwise Operations, Math
+---------------
+---------------
+
+Problem Statement
+-----------------
+Given an integer, write a function to determine if it is a power of two.
+
+Example 1:
+
+Input: 1
+Output: true 
+Explanation: 20 = 1
+Example 2:
+
+Input: 16
+Output: true
+Explanation: 24 = 16
+Example 3:
+
+Input: 218
+Output: false
+
+
+--------------------------------------------------------------------------------------------------
+
+Solution
+--------
+
+public class PowerOfTwo {
+  
+  
+  public static void main(String[] args) { 
+    
+    boolean x = isPowerOfTwo(2);
+    
+    printBool(x);
+  }
+  
+  public static void printBool(boolean b){
+    if(b) {
+      System.out.println("True");
+    } else {
+      System.out.println("False");
+    }
+  }
+  
+  public static boolean isPowerOfTwo(int n) {
+    int count = Integer.bitCount(n);
+    return n > 0 && count == 1;
+  }
+  
+}
+
+------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+
+Complexity:
+-----------
+O(1)

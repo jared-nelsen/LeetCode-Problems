@@ -1,0 +1,79 @@
+Leaf - Similar Trees - Easy Problem								         Depth First Search
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Consider all the leaves of a binary tree.  From left to right order, the values of 
+those leaves form a leaf value sequence.
+
+
+For example, in the given tree above, the leaf value sequence is (6, 7, 4, 9, 8).
+
+Two binary trees are considered leaf-similar if their leaf value sequence is the 
+same.
+
+Return true if and only if the two given trees with head nodes root1 and root2 are
+leaf-similar.
+
+Note:
+
+Both of the given trees will have between 1 and 100 nodes.
+
+------------------------------------------------------------------------------------------
+
+Solution
+------------
+
+class Solution {
+    public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+        
+        List<Integer> leavesOne = new ArrayList<>();
+        List<Integer> leavesTwo = new ArrayList<>();
+        
+        gatherLeaves(root1, leavesOne);
+        gatherLeaves(root2, leavesTwo);
+        
+        boolean similar = true;
+        if(leavesOne.size() != leavesTwo.size())
+            return false;
+        else {
+            for(int i = 0; i < leavesOne.size(); i++){
+                Integer one = leavesOne.get(i);
+                Integer two = leavesTwo.get(i);
+                if(one != two){
+                    similar = false;
+                    break;
+                }
+            }
+        }
+        
+        return similar;
+    }
+    
+    public void gatherLeaves(TreeNode node, List<Integer> leaves) {
+        
+        if(node == null) {
+            return;
+        }
+        
+        if(node.left == null && node.right == null){
+            leaves.add(node.val);
+        } else {
+            gatherLeaves(node.left, leaves);
+            gatherLeaves(node.right, leaves);
+        }
+    }
+}
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Notes:
+------
+Easy problem that I got on the first try.
+
+Complexity:
+-----------
+gatherLeaves is O(2^n) and leafSimilar is O(n) at worst.

@@ -1,0 +1,61 @@
+Remove Duplicates From Sorted List - Easy Problem                        Linked Lists
+---------------
+---------------
+
+Problem Statement
+-----------------
+
+Given a sorted linked list, delete all duplicates such that each element appear only once.
+
+Example 1:
+
+Input: 1->1->2
+Output: 1->2
+Example 2:
+
+Input: 1->1->2->3->3
+Output: 1->2->3
+			 
+------------------------------------------------------------------------------------------
+
+Solution
+--------
+
+    public ListNode deleteDuplicates(ListNode head) {
+        
+        if(head == null)
+            return null;
+        
+        Set<Integer> items = new HashSet<>();
+        
+        while(head != null) {
+            items.add(head.val);
+            head = head.next;
+        }
+        
+        PriorityQueue<Integer> queue = new PriorityQueue<>();
+        for(Integer i : items) {
+            queue.add(i);
+        }
+        
+        ListNode temp = new ListNode(queue.poll());
+        head = temp;
+        while(queue.size() > 0) {
+            Integer i = queue.poll();
+            temp.next = new ListNode(i);
+            temp = temp.next;
+        }
+        
+        return head;
+    }
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+Notes:
+------
+Easy Problem. Remember the technique of using a temp node to build a linked list.
+
+Complexity:
+-----------
+O(n)
